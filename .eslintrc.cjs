@@ -1,5 +1,5 @@
 /** @type {import("eslint").Linter.Config} */
-export default {
+module.exports = {
     parser: "@typescript-eslint/parser", // Specifies the ESLint parser
     parserOptions: {
         ecmaVersion: 2020, // Allows for the parsing of modern ECMAScript features
@@ -25,5 +25,5 @@ export default {
             },
         ],
     },
-    ignorePatterns: ["dist", "node_modules", ".github/workflows"],
+    ignorePatterns: ["dist", "node_modules", ".github/workflows", "./test/mocks/std-mocks.ts"],
 };

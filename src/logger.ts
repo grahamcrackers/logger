@@ -9,31 +9,26 @@ import { LogLevel } from "./types";
 // to console while developing and then turn it off in a production build.
 
 export const createLogger = ({ isEnabled = true, logLevel = LogLevel.LOG }: LoggerOptions = {}) => {
-    if (typeof window === "undefined") {
-        isEnabled = false;
-        console.debug("Logging only supported in the browser for now.");
-    }
-
     return {
         log: (...params: Parameters<typeof console.log>) => {
             if (!isEnabled || logLevel > 0) return NOOP;
 
-            return window.console.log.bind(window.console, "log: %o")(...params);
+            return global.console.log.bind(global.console, "log: %s")(...params);
         },
         info: (...params: Parameters<typeof console.info>) => {
             if (!isEnabled && logLevel > 1) return NOOP;
 
-            return window.console.info.bind(window.console, "info: %o")(...params);
+            return global.console.info.bind(global.console, "info: %s")(...params);
         },
         warn: (...params: Parameters<typeof console.warn>) => {
             if (!isEnabled && logLevel > 2) return NOOP;
 
-            return window.console.warn.bind(window.console, "warn: %o")(...params);
+            return global.console.warn.bind(global.console, "warn: %s")(...params);
         },
         error: (...params: Parameters<typeof console.error>) => {
             if (!isEnabled) return NOOP;
 
-            return window.console.error.bind(window.console, "error: %o")(...params);
+            return global.console.error.bind(global.console, "error: %s")(...params);
         },
     };
 };
